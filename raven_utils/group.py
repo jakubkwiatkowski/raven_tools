@@ -1,5 +1,3 @@
-import numpy as np
-
 NAMES = ['center_single',
          'distribute_four',
          'distribute_nine',

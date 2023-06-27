@@ -1,4 +1,4 @@
-from ml_utils import dict_from_list
+from core_tools.core import dict_from_list
 COMBINE = "Number/Position"
 
 ATTRIBUTES = [

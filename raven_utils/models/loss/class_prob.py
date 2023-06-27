@@ -2,7 +2,7 @@ from functools import partial
 
 import tensorflow as tf
 
-from data_utils import PREDICT
+from core_tools.core import PREDICT
 from models_utils import kl_div, cross_entropy_with_logits, debug_, sym_div, js_div_2
 from tensorflow.keras import Model
 from tensorflow.keras.losses import SparseCategoricalCrossentropy, mse, sparse_categorical_crossentropy

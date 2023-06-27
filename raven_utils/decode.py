@@ -1,9 +1,11 @@
 import numpy as np
-from data_utils import np_split
-from ml_utils import lw
+from core_tools.core import lw
 from models_utils.ops import ibin
 
 import raven_utils as rv
+
+def np_split(ary, indices_or_sections, axis=-1):
+    return np.split(ary, np.cumsum(indices_or_sections), axis)[:-1]
 
 
 def output(x, split_fn=np_split, predict_fn_1=np.argmax, predict_fn_2=ibin):

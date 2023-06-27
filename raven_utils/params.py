@@ -1,9 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Tuple, Union, Callable
 
-from ml_utils import get_str_name
 from grid_transformer import GridTransformerParameters
-from models_utils import LAST
+from core_tools.core import LAST, get_str_name
 from raven_utils import output
 
 from grid_transformer.constants import RANDOM, TILE

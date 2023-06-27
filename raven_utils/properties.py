@@ -1,6 +1,6 @@
 import raven_utils as rv
 import numpy as np
-from ml_utils import dict_from_list2, CalcDict
+from core_tools.core import dict_from_list2, CalcDict
 import raven_utils.entity as entity
 
 NAMES = [

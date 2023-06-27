@@ -7,4 +7,3 @@ import raven_utils.output as output
 import raven_utils.inference as inference
 import raven_utils.decode as decode
 import raven_utils.render_ as render_
-import raven_utils.draw as draw
