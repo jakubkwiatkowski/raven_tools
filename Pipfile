@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+#ml_utils = { path = "../ml_utils/", editable = true }
+#tensorflow = "*"
+#funcy = "*"
+#Pillow = "*"
+#scikit-image = "*"
+#scikit-learn = "*"
+#seaborn = "*"
+
+[requires]
+python_version = "3.9.1"
