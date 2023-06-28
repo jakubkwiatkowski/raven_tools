@@ -1,13 +1,11 @@
 import tensorflow as tf
-from experiment_utils.reporting import METRICS
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from tensorflow.keras.metrics import SparseCategoricalAccuracy
 from tensorflow.keras.layers import Dense
 from tensorflow.keras import Model
 
-from models_utils.ops_core import IndexReshape
-from data_utils import TakeDict, INDEX, PREDICT, OUTPUT
+from core_tools.core import IndexReshape, METRICS, TakeDict, INDEX, PREDICT, OUTPUT
 from raven_utils.constant import ANSWER, DIRECT, FULL_JOIN, SEPARATE
 
 from raven_utils.models.loss import SimilarityRaven, create_all_mask

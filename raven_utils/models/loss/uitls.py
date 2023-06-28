@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from models_utils import ops as K
+from core_tools import ops as K
 
 
 def get_matches(diff, target_index):

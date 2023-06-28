@@ -1,8 +1,9 @@
 import tensorflow as tf
-from data_utils import TARGET, OUTPUT, LABELS, PREDICT
+from core_tools.core import TARGET, OUTPUT, LABELS, PREDICT
 from tensorflow.keras import Model
 
-from models_utils import ops as K, sym_div
+from core_tools.loss import  sym_div
+from core_tools import ops as K
 from raven_utils.models.loss.class_ import ClassRavenModel
 from raven_utils.models.loss.prob_loss import ProbLoss
 from raven_utils.models.loss.mask import create_uniform_mask, create_all_mask

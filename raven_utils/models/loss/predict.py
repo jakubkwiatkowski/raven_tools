@@ -3,9 +3,13 @@ from tensorflow.keras import Model
 from tensorflow.keras.layers import Lambda
 
 import raven_utils as rv
-from models_utils import Predict, ops as K
-from models_utils.models.utils import interleave
+from core_tools.core import Predict
+from core_tools import  ops as K
 from raven_utils.models.uitls_ import RangeMask
+def interleave(a):
+    return tf.reshape(
+        tf.concat([i[..., tf.newaxis] for i in a], axis=-1),
+        [tf.shape(a[0])[0], -1])
 
 
 class PredictModel(Model):

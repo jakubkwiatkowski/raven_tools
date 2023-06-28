@@ -1,6 +1,9 @@
 import numpy as np
 from core_tools.core import lw
-from models_utils.ops import ibin
+import tensorflow as tf
+
+def ibin(x):
+    return tf.cast(bin(x), dtype=tf.int32)
 
 import raven_utils as rv
 

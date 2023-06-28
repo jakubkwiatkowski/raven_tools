@@ -2,8 +2,8 @@ import tensorflow as tf
 from tensorflow.keras import Model
 
 import raven_utils as rv
-from experiment_utils.constants import METRIC
-from models_utils import BatchModel, ops as K
+from core_tools.core import METRIC, BatchModel
+from core_tools import ops as K
 from raven_utils.config.constant import ACC_SAME
 from raven_utils.constant import HAMF, HAM, HAMS, T_ACC, AVG_PROP
 from raven_utils.models.loss.predict import PredictModel

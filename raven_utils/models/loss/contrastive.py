@@ -1,9 +1,10 @@
 import tensorflow as tf
-from data_utils import TARGET, OUTPUT, LABELS, PREDICT
-from models_utils.models.contrastive_loss import CosineSimilarity
+from core_tools.core import TARGET, OUTPUT, LABELS, PREDICT
+from core_tools.contrastive_loss import CosineSimilarity
 from tensorflow.keras import Model
 
-from models_utils import ops as K, sym_div
+from core_tools import ops as K
+from core_tools.loss import  sym_div
 from raven_utils.models.loss.class_ import ClassRavenModel
 from raven_utils.models.loss.prob_loss import ProbLoss
 from raven_utils.models.loss.mask import create_uniform_mask, create_all_mask

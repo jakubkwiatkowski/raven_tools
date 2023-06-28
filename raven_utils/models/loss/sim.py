@@ -3,14 +3,18 @@ from tensorflow.keras import Model
 import tensorflow.experimental.numpy as tnp
 
 import raven_utils as rv
-from data_utils import PREDICT, AUTO
-from models_utils import ops as K
-from models_utils.models.utils import interleave
+from core_tools import ops as K
+from core_tools.core import  PREDICT, AUTO
 from raven_utils.config.constant import ACC_SAME, ACC_CHOICE_UPPER, ACC_CHOICE_LOWER, ACC_CHOiCE_UPPER_2
 from raven_utils.constant import HAMF, HAM, HAMS, T_ACC, AVG_PROP, TARGET, ANSWER
 from raven_utils.models.loss.uitls import get_matches
 from raven_utils.models.loss.mask import create_uniform_mask, create_uniform_num_pos_arth_mask
 from raven_utils.models.uitls_ import RangeMask
+
+def interleave(a):
+    return tf.reshape(
+        tf.concat([i[..., tf.newaxis] for i in a], axis=-1),
+        [tf.shape(a[0])[0], -1])
 
 SIM_MASK = 'sim_mask'
 
@@ -87,7 +91,7 @@ class SimilarityRaven(Model):
         answers_comp = answers[:, :, 1:rv.target.END_INDEX]
 
         full_properties_musks = self.mode(target)
-        fpm = K.cat([full_properties_musks[0], interleave(full_properties_musks[2:])])
+        fpm = tf.concat([full_properties_musks[0], interleave(full_properties_musks[2:])], axis=-1)
 
         range_mask = self.range_mask(group)
         if self.mask_slot:

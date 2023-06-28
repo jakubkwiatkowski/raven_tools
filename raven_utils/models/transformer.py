@@ -5,28 +5,26 @@ from tensorflow.keras.layers import Lambda, Activation, Dense
 
 from grid_transformer import GridTransformer
 from grid_transformer.grid_transformer import get_model_output_names
-from ml_utils import filter_keys, il, lu, lw
+from core_tools.core import filter_keys, il, lu, lw
 
 from raven_utils.constant import NUM_POS_ARTH, TARGET, ANSWER, DIRECT, FULL_JOIN, SEPARATE, LATENT
 from raven_utils.models.loss import RavenLoss, create_uniform_mask, PredictModel, NonMaskedMetricRaven, create_all_mask, \
     ProbMetric, create_uniform_num_pos_arth_mask
-from data_utils import OUTPUT, PREDICT, ims, INDEX
-from models_utils import ops as K
+from core_tools.core import OUTPUT, PREDICT , INDEX, LOSS
+from core_tools import ops as K
 
-from data_utils import DataGenerator, LOSS
-from models_utils import DictModel, build_functional, Last, bm, \
+from core_tools.core import DictModel, build_functional, Last, bm, \
     Predictor, AUGMENTATION, Trainer, SubClassingModel, CROSS_ENTROPY, BatchModel, ACC
 
 from raven_utils.models.loss.contrastive import ContrastiveMetric
 from raven_utils.models.loss.mask import LOSS_MODE
 from raven_utils.models.loss.prob_dist import ProbDistMetric, reverse_index_loss, contrastive_loss
 from raven_utils.models.select_ import ChoiceMaker2, ChoiceMaker1, ChoiceMaker, DCPMetric, CLASS_IMAGE
-from experiment_utils.keras_model import load_weights as model_load_weights
-from models_utils.regularization import Regularization
+from core_tools.core import Regularization
 
-from raven_utils.params import PROB
 
 PREDICT_MASK = "predict_mask"
+PROB = "prob"
 
 
 def get_rav_trans(
@@ -47,9 +45,10 @@ def get_rav_trans(
     if isinstance(loss_weight, float):
         loss_weight = (loss_weight, 1.0)
 
+    GridTransformer(**kwargs)(data)
     trans_raven = build_functional(
         model=GridTransformer,
-        inputs_=data[0] if isinstance(data, DataGenerator) else data,
+        inputs_=data[0] if not isinstance(data, dict) else data,
         batch_=None,
         dry_run=dry_run,
         **kwargs
@@ -195,13 +194,7 @@ def rav_select_model(
         )
 
         if load_weights:
-            model_load_weights(
-                model3,
-                load_weights,
-                # sample_data,
-                None,
-                key=load_metric,
-            )
+            model3.load_weights(load_weights)
 
         if AUGMENTATION in kwargs and kwargs[AUGMENTATION] is not None:
             index = -1
@@ -275,12 +268,7 @@ def rav_select_model(
     #     # **{**as_dict(p.mp), "show_shape": True, "save_shape": f"output/shapes/type_{p.mp.type_}.json"},
     # )
     if load_weights:
-        model_load_weights(model,
-                           load_weights,
-                           # sample_data,
-                           None,
-                           key=load_metric,
-                           )
+        model.load_weights(load_weights)
     # model.compile()
     # model.evaluate(val_generator.data[:1000])
     # model(TakeDict(val_generator[0])[:, 8:])
@@ -300,12 +288,7 @@ def rav_select_model(
                 **kwargs
             )
             if load_weights:
-                model_load_weights(model4,
-                                   load_weights,
-                                   # sample_data,
-                                   None,
-                                   key=load_metric,
-                                   )
+                model4.load_weights(load_weights)
 
             if AUGMENTATION in kwargs and kwargs[AUGMENTATION] is not None:
                 index = -1
@@ -353,13 +336,7 @@ def rav_select_model(
         # **{**as_dict(p.mp), "show_shape": True, "save_shape": f"output/shapes/type_{p.mp.type_}.json"},
     )
     if load_weights:
-        model_load_weights(
-            model2,
-            load_weights,
-            # sample_data,
-            None,
-            key=load_metric,
-        )
+        model2.load_weights(load_weights)
     if select_type == 0:
         # not working
         trans_raven2 = model2[0]

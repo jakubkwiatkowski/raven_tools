@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import Tuple, Union, Callable
 
 from grid_transformer import GridTransformerParameters
-from core_tools.core import LAST, get_str_name
+from core_tools.core import LAST
 from raven_utils import output
 
 from grid_transformer.constants import RANDOM, TILE
@@ -153,77 +153,3 @@ class LatentProjectionContrastiveLearnableChoiceMakerParameters(DirectChoiceMake
     additional_reg: int = 16
 
 SMP = RowTokenizerParameters
-
-from experiment_utils.parameters.nn_clean import Parameters as BaseParameters
-from raven_utils.config.constant import RAVEN, IMP_RAV_METRICS, ACC_SAME
-
-MODEL_NO = -1
-
-
-@dataclass
-class RavenParameters(BaseParameters):
-    dataset_name: str = RAVEN
-    data: str = None
-    dataset_split: str = ("train", "val")
-
-    # core_metrics: tuple = tuple(RAV_METRICS)
-    filter_metrics: tuple = tuple(IMP_RAV_METRICS)
-    # result_metric: str = ACC_NO_GROUP
-    result_metric: str = ACC_SAME
-    loss_mode: Union[Callable, str] = NUM_POS_ARTH
-
-    lw: float = 0.0001  # Autoencoder
-    loss_weight: Union[Tuple, float] = 2.0
-    plw: int = 5.0
-    mp: RowTokenizerParameters = field(default_factory=lambda:RowTokenizerParameters())
-
-    _experiment: str = "rav/best_test3"
-
-    # @property
-    # def experiment(self):
-    #     # return "rav/trans"
-    #     return "rav/best_test3"
-    #     # return "rav/trans_weight"
-
-    # @property
-    # def name(self):
-    #     # return f"i{self.extractor}_{len(self.tail)}{self.tail[0]}_{self.type_}_{self.epsilon}_{self.last}_{self.epsilon_step}"
-    #     return f"{get_str_name(self.mp.pre)[0]}_{str(self.plw)[0]}_{str(self.mp.number_loss)[0]}_{self.mp.extractor}_{self.mp.noise if self.mp.noise else ''}_{self.mp.augmentation if self.mp.augmentation else ''}_{self.mp.extractor_shape}_{self.mp.no}_{self.mp.num_heads}_{self.mp.size}_{self.mp.pos_emd}_{self.mp.ff_mul}_{self.tp.batch}"
-
-
-@dataclass
-class DoubleRavenParameters(RavenParameters):
-    loss_weight: Union[Tuple, float] = (0.01, 0.0),
-    mp: RowTokenizerParameters = field(default_factory=lambda:DoubleRowTokenizerParameters())
-
-
-@dataclass
-class BaselineRavenParameters(RavenParameters):
-
-    @property
-    def experiment(self):
-        # return "rav/best_test3"
-        return "rav/baseline"
-        # return "rav/trans_weight"
-
-    @property
-    def name(self):
-        # return f"i{self.extractor}_{len(self.tail)}{self.tail[0]}_{self.type_}_{self.epsilon}_{self.last}_{self.epsilon_step}"
-        return f"{get_str_name(self.mp.pre)[0]}_{str(self.plw)[0]}_{str(self.mp.number_loss)[0]}_{self.mp.extractor}_{self.mp.noise if self.mp.noise else ''}_{self.mp.augmentation if self.mp.augmentation else ''}_{self.mp.extractor_input}_{self.mp.no}_{self.mp.num_heads}_{self.mp.size}_{self.mp.pos_emd}_{self.mp.ff_mul}_{self.tp.batch}"
-
-
-@dataclass
-class RavenParametersEval(RavenParameters):
-    dataset_split: int = ("train", "val")
-
-    @property
-    def experiment(self):
-        return "rav/trans_eval"
-
-    @property
-    def name(self):
-        return f"{self.dataset_split}|" + super(RavenParametersEval, self).name
-
-
-if __name__ == '__main__':
-    params = DoubleRowTokenizerParameters()
