@@ -15,4 +15,4 @@ verify_ssl = true
 #seaborn = "*"
 
 [requires]
-python_version = "3.9.1"
+python_version = "3.11.5"
